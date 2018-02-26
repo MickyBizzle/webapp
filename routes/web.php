@@ -11,8 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index')->name('home');
+
+Route::get('add_new', 'AddNewController@show')->name('add_new');
+
+Route::get('view_previous', 'ViewPreviousController@show')->name('view_previous');
 
 Route::get('add_data', 'AddDataController@add');

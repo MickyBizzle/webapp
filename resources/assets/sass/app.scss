@@ -2,6 +2,8 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600"); // Variables
 @import "variables"; // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import 'home.scss';
+@import 'add_new.scss';
 
 body,
 html {
@@ -13,13 +15,13 @@ html {
   margin: 0;
 }
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
+nav {
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
 
-#homepage {
-  .col-sm {
-    text-align: center;
+  .navbar-nav {
+    margin-left: auto !important;
+    margin-right: 0 !important;
   }
 }

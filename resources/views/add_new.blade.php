@@ -13,9 +13,7 @@
       <span id="started">Created At: <div style="display:inline;font-size:16px;opacity:0.8;">Will update automatically</div></span>
       <span id="data_connect">Receiving Data: <div id="status" class="bg-danger">NO</div></span>
     </div>
-    <button type="button" class="btn btn-success start_stop">
-      Start
-    </button>
+    <button type="button" class="btn btn-success start_stop">Start</button>
   </div>
 </div>
 @endsection

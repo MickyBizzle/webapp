@@ -19,6 +19,7 @@
         "symfony/thanks": "^1.0"
     },
     "autoload": {
+      "files": ["app/Http/common.php"],
         "classmap": [
             "database/seeds",
             "database/factories"

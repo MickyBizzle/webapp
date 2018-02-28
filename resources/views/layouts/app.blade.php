@@ -19,6 +19,8 @@
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <!-- Bootstrap -->
   <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+  <!-- jQuery toast  -->
+  <link href="{{ asset('css/jquery.toast.min.css') }}" rel="stylesheet">
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 </head>
@@ -48,6 +50,7 @@
 
   <!-- Scripts -->
   <script src="{{ asset('js/app.js') }}"></script>
+  <script src="{{ asset('js/jquery.toast.min.js') }}"></script>
 
   @yield('scripts')
 </body>

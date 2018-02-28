@@ -10067,7 +10067,7 @@ a.text-dark:focus {
 }
 
 #add_new_page .head_bar .head_contain #title input {
-  padding: 0;
+  padding: 0 10px;
   font-size: 26px;
   font-weight: bold;
   border: none;

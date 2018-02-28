@@ -31,8 +31,8 @@ class HomeController extends Controller
         Schema::create('experiments', function($table) {
           $table->increments('id');
           $table->string('title', 100);
-          $table->dateTime('created_at');
-          $table->time('elapsed');
+          $table->dateTime('created_at')->nullable();
+          $table->time('elapsed')->nullable();
         });
       } catch(\Illuminate\Database\QueryException $ex) {
         die($ex->getMessage());
@@ -43,7 +43,11 @@ class HomeController extends Controller
       try {
         Schema::create('experiment_data', function($table) {
           $table->increments('id');
+          $table->integer('experiment_id')->length(10)->unsigned();
           $table->string('data', 100);
+        });
+        Schema::table('experiment_data', function($table) {
+          $table->foreign('experiment_id')->references('id')->on('experiments')->onDelete('cascade');
         });
       } catch(\Illuminate\Database\QueryException $ex) {
         die($ex->getMessage());

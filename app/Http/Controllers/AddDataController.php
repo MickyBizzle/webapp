@@ -8,11 +8,16 @@ use Illuminate\Http\Request;
 
 class AddDataController extends controller
 {
-  public function __construct() {
-    $this->middleware('auth');
+  private function isRecording() {
+    return DB::table('is_recording')->select()->get();
   }
-  
+
   public function add(Request $request) {
-    return $request->input("data");
+    if ($this->isRecording()[0]->is_recording) {
+      return "yes";
+    }
+    else {
+      return "Not recording";
+    }
   }
 }

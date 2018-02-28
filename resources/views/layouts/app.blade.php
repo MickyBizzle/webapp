@@ -44,10 +44,10 @@
         <li class="nav-item">
           <a class="nav-link" href="{{route('view_previous')}}">View Previous</a>
         </li>
-        <li class="nav-item nav-link">|</li>
+        <!-- <li class="nav-item nav-link">|</li>
         <li class="nav-item">
           <a class="nav-link" href="{{route('edit_hardware')}}">Change Hardware Authentication</a>
-        </li>
+        </li> -->
       </ul>
     </div>
   </nav>

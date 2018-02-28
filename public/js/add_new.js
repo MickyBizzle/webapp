@@ -66,6 +66,7 @@ function startRecord(title) {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function(data) {
+      console.log(data);
       if (data[0].is_recording) {
         $('.start_stop').removeClass('btn-success').addClass('btn-danger').html("Stop");
         isRecording = true;

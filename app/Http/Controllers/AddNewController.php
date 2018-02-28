@@ -26,10 +26,10 @@ class AddNewController extends controller
 
     try {
       DB::beginTransaction();
-      DB::table('recording')->update(['is_recording' => true]);
+      DB::table('is_recording')->update(['is_recording' => true]);
       DB::table('experiments')->insert(['title' => $title]);
       DB::commit();
-      return DB::table('recording')->select()->get();
+      return DB::table('is_recording')->select()->get();
     } catch (\Exception $e) {
       DB::rollback();
       return($e->getMessage());
@@ -41,9 +41,9 @@ class AddNewController extends controller
     DB::beginTransaction();
 
     try {
-      DB::table('recording')->update(['is_recording' => false]);
+      DB::table('is_recording')->update(['is_recording' => false]);
       DB::commit();
-      return DB::table('recording')->select()->get();
+      return DB::table('is_recording')->select()->get();
     } catch (\Exception $e) {
       DB::rollback();
       return($e->getMessage());

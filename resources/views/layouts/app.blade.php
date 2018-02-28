@@ -36,11 +36,17 @@
         <li class="nav-item">
           <a class="nav-link" href="{{route('home')}}">Home</a>
         </li>
+        <li class="nav-item nav-link">|</li>
         <li class="nav-item">
           <a class="nav-link" href="{{route('add_new')}}">Add New</a>
         </li>
+        <li class="nav-item nav-link">|</li>
         <li class="nav-item">
           <a class="nav-link" href="{{route('view_previous')}}">View Previous</a>
+        </li>
+        <li class="nav-item nav-link">|</li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{route('edit_hardware')}}">Change Hardware Authentication</a>
         </li>
       </ul>
     </div>

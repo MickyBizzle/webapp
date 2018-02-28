@@ -17,7 +17,18 @@ Route::get('add_new', 'AddNewController@show')->name('add_new');
 
 Route::get('view_previous', 'ViewPreviousController@show')->name('view_previous');
 
+Route::get('edit_hardware', 'EditHardwareController@index')->name('edit_hardware');
+Route::get('logout', 'EditHardwareController@logout');
+
 Route::post('start_record', 'AddNewController@startRecord');
 Route::get('stop_record', 'AddNewController@stopRecord');
 
 Route::post('add_data', 'AddDataController@add');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

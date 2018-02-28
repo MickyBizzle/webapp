@@ -15,6 +15,7 @@ class HomeController extends Controller
   */
   public function __construct()
   {
+    /*
     if (!Schema::hasTable('recording')) {
       try {
         Schema::create('recording', function($table) {
@@ -53,6 +54,7 @@ class HomeController extends Controller
         die($ex->getMessage());
       }
     }
+    */
   }
 
   /**

@@ -23,6 +23,8 @@ Route::get('logout', 'EditHardwareController@logout');
 Route::post('start_record', 'AddNewController@startRecord');
 Route::get('stop_record', 'AddNewController@stopRecord');
 
+Route::post('get_data', 'AddNewController@getData');
+
 Route::post('add_data', 'AddDataController@add');
 
 Auth::routes();

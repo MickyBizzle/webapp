@@ -17,6 +17,23 @@ class AddNewController extends controller
     return view('add_new');
   }
 
+  public function getData(Request $request) {
+    try {
+      DB::beginTransaction();
+      DB::table('is_recording')->where('is_recording', true)->update(['updated_at' => date("Y-m-d H:i:s")]);
+      if ($request->input('getTimeStarted')) {
+        $toSend['startTime'] = DB::table('experiments')->where('id', $request->input('id'))->get()[0]->experiment_started;
+      }
+      $toSend['data'] = DB::table('experiment_data')->select('data')->where('experiment_id', $request->input('id'))->get();
+      DB::commit();
+      return json_encode($toSend);
+      // return var_dump($request->input('id'));
+    } catch (\Exception $e) {
+      DB::rollback();
+      return $e->getMessage();
+    }
+  }
+
 
   public function startRecord(Request $request) {
     $title = $request->input('title');
@@ -27,12 +44,12 @@ class AddNewController extends controller
     try {
       DB::beginTransaction();
       DB::table('is_recording')->update(['is_recording' => true]);
-      DB::table('experiments')->insert(['title' => $title]);
+      $id = DB::table('experiments')->insertGetId(['title' => $title]);
       DB::commit();
-      return DB::table('is_recording')->select()->get();
+      return json_encode(['id' => $id]);
     } catch (\Exception $e) {
       DB::rollback();
-      return($e->getMessage());
+      return $e->getMessage();
     }
   }
 
@@ -46,7 +63,7 @@ class AddNewController extends controller
       return DB::table('is_recording')->select()->get();
     } catch (\Exception $e) {
       DB::rollback();
-      return($e->getMessage());
+      return $e->getMessage();
     }
   }
 

@@ -16,7 +16,7 @@ class CreateExperimentDataTable extends Migration
     Schema::create('experiment_data', function (Blueprint $table) {
       $table->increments('id');
       $table->integer('experiment_id')->length(10)->unsigned();
-      $table->string('data', 100);
+      $table->text('data');
       $table->foreign('experiment_id')->references('id')->on('experiments')->onDelete('cascade');
     });
   }

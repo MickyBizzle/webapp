@@ -15,6 +15,7 @@ class CreateIsRecordingTable extends Migration
   {
     Schema::create('is_recording', function (Blueprint $table) {
       $table->boolean('is_recording');
+      $table->dateTime('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
     });
     DB::table('is_recording')->insert(['is_recording' => false]);
   }

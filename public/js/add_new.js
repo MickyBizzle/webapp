@@ -1,4 +1,7 @@
-isRecording = false;
+var isRecording = false;
+var firstData = true;
+var expId;
+var oldLength = 0;
 
 $(document).ready(function() {
   //Reset validation when title input is clicked
@@ -49,10 +52,39 @@ function startGetData() {
 
 function endGetData() {
   clearInterval(dataInterval);
+  $('.timer').stopwatch('stop');
 }
 
 function getData() {
-  console.log("testing");
+  $.ajax({
+    method: "POST",
+    data: {'getTimeStarted': firstData, 'id': expId},
+    url: "http://svmib26.dcs.aber.ac.uk/webapp/public/get_data",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function(data) {
+      data = JSON.parse(data);
+      // console.log(data.data);
+      length = data.data.length;
+      if (firstData && data.startTime) {
+        $('#started div').remove();
+        $('#started').append(" " + data.startTime);
+        $('.timer').stopwatch().stopwatch('start');
+        firstData = false;
+      }
+      if (length > oldLength) {
+        $('#status').removeClass("bg-danger").addClass("bg-success").html("YES");
+        oldLength = length;
+      }
+      else {
+        $('#status').removeClass("bg-success").addClass("bg-danger").html("NO");
+      }
+    },
+    error: function(error) {
+      console.log(error);
+    },
+  });
 }
 
 
@@ -66,8 +98,9 @@ function startRecord(title) {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function(data) {
-      console.log(data);
-      if (data[0].is_recording) {
+      data = JSON.parse(data);
+      expId = data.id;
+      if (data.id) {
         $('.start_stop').removeClass('btn-success').addClass('btn-danger').html("Stop");
         isRecording = true;
         startGetData();

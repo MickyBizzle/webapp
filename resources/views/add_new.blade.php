@@ -7,7 +7,7 @@
       <span id="title">
         <input class="title_in" placeholder="Insert title here">
       </span>
-      <span id="time">Time Elapsed: 00:00:00</span>
+      <span id="time">Time Elapsed: <div class="timer" style="display:inline">00:00:00</div></span>
     </div>
     <div class="head_contain">
       <span id="started">Created At: <div style="display:inline;font-size:16px;opacity:0.8;">Will update automatically</div></span>
@@ -19,5 +19,6 @@
 @endsection
 
 @section('scripts')
+<script src="{{ asset('js/jquery.stopwatch.js') }}"></script>
 <script src="{{ asset('js/add_new.js') }}"></script>
 @endsection

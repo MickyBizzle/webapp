@@ -8,8 +8,6 @@ $(document).ready(function() {
     });
     array.push(tempArr);
   });
-  console.log(array);
-
 
   google.charts.load('current', {packages: ['line']});
   google.charts.setOnLoadCallback(drawChart);

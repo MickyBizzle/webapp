@@ -25,6 +25,8 @@ class HomeController extends Controller
   */
   public function index()
   {
-    return view('home');
+    $recent = DB::table('experiments')->latest()->get()[0];
+    $data = DB::table('experiment_data')->where('experiment_id', $recent->id)->get();
+    return view('home')->with(['recent' => $recent, 'data' => $data]);
   }
 }

@@ -30,21 +30,31 @@
       <div class="col-sm">
         <div class="action-box">
           <div id="recent">
-            <span id="head">Most Recent</span>
-            <span>Title: </span>
-            <span>Date Recorded: </span>
-            <span>Length: </span>
+            <a href="{{route('add_new')}}">
+              <span id="head">Most Recent</span>
+            </a>
+            <span>Title: {{ $recent->title }}</span>
+            <span>Date Recorded: {{ $recent->experiment_started }}</span>
+            <span>Length: {{ $recent->elapsed }}</span>
+            <div class="data_chart"></div>
           </div>
         </div>
       </div>
       <div class="col-sm">
         <div class="action-box">
           <div class="action-content">
+            <span class="action-header">Stats</span>
           </div>
-          Hello
         </div>
       </div>
     </div>
   </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+data = {!! json_encode($data) !!};
+</script>
+<script src="{{ asset('js/chart_data.js') }}"></script>
 @endsection

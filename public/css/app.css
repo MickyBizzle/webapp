@@ -10095,6 +10095,87 @@ a.text-dark:focus {
   font-weight: bold;
 }
 
+#view_previous {
+  width: 100%;
+}
+
+#view_previous .pagination {
+  text-align: right;
+}
+
+#view_previous table {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#view_previous td,
+#view_previous th {
+  border-bottom: 1px solid #ddd;
+}
+
+#view_previous th {
+  font-size: 26px;
+}
+
+#view_previous td {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 5px;
+  cursor: pointer;
+}
+
+#view_previous #actions {
+  text-align: center;
+}
+
+#view_previous #actions a {
+  margin-left: 10px;
+}
+
+#view_previous tr:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+#view_previous .confirm {
+  margin-left: 10px;
+  float: right;
+}
+
+#view_previous .error_msg {
+  color: red;
+  font-weight: bold;
+}
+
+#show {
+  padding: 5px;
+}
+
+#show .data_chart {
+  height: 500px;
+}
+
+body,
+html {
+  background-color: #fff;
+  color: #636b6f;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 100;
+  height: 100vh;
+  margin: 0;
+}
+
+nav {
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+nav .navbar-nav {
+  margin-left: auto !important;
+  margin-right: 0 !important;
+}
+
 @-webkit-keyframes shake {
   0% {
     -webkit-transform: translate(1px, 1px) rotate(0deg);
@@ -10207,26 +10288,5 @@ a.text-dark:focus {
     -webkit-transform: translate(1px, -2px) rotate(-1deg);
             transform: translate(1px, -2px) rotate(-1deg);
   }
-}
-
-body,
-html {
-  background-color: #fff;
-  color: #636b6f;
-  font-family: 'Raleway', sans-serif;
-  font-weight: 100;
-  height: 100vh;
-  margin: 0;
-}
-
-nav {
-  color: #fff;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-nav .navbar-nav {
-  margin-left: auto !important;
-  margin-right: 0 !important;
 }
 

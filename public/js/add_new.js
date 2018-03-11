@@ -58,11 +58,11 @@ function endGetData() {
 function getData() {
   $.ajax({
     method: "POST",
-    data: {'getTimeStarted': firstData, 'id': expId},
     url: "http://svmib26.dcs.aber.ac.uk/webapp/public/get_data",
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
+    data: {'getTimeStarted': firstData, 'id': expId},
     success: function(data) {
       data = JSON.parse(data);
       // console.log(data.data);
@@ -117,15 +117,27 @@ function startRecord(title) {
   });
 }
 
-// Send get request to stop recording and then change css of Stop button
+// Send post request to stop recording, passing in time elapsed, and then change css of Stop button
 function stopRecording() {
-  $.get("http://svmib26.dcs.aber.ac.uk/webapp/public/stop_record", function(data) {
-    if (data[0].is_recording == 0) {
-      $('.start_stop').removeClass('btn-danger').addClass('btn-success').html("Start");
-      isRecording = false;
-      endGetData();
+  $.ajax({
+    method: "POST",
+    url: "http://svmib26.dcs.aber.ac.uk/webapp/public/stop_record",
+    data: {'time': $('.timer').html(), 'id': expId},
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function(data) {
+      console.log(data);
+      if (data[0].is_recording == 0) {
+        $('.start_stop').removeClass('btn-danger').addClass('btn-success').html("Start");
+        isRecording = false;
+        endGetData();
+      }
+    },
+    error: function(error) {
+      console.log(error);
     }
-  })
+  });
 }
 
 // Jquery toast with custom message

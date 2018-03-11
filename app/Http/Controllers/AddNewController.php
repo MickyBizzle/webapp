@@ -54,11 +54,13 @@ class AddNewController extends controller
   }
 
 
-  public function stopRecord() {
+  public function stopRecord(Request $request) {
     DB::beginTransaction();
-
     try {
       DB::table('is_recording')->update(['is_recording' => false]);
+      if ($request->input('id')) {
+        DB::table('experiments')->where('id', $request->input('id'))->update(['elapsed' => $request->input('time')]);
+      }
       DB::commit();
       return DB::table('is_recording')->select()->get();
     } catch (\Exception $e) {

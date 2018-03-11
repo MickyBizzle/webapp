@@ -15,22 +15,22 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('add_new', 'AddNewController@show')->name('add_new');
 
-Route::get('view_previous', 'ViewPreviousController@show')->name('view_previous');
+Route::get('view_previous', 'ViewPreviousController@index')->name('view_previous');
+Route::get('show_experiment/{id}', 'ViewPreviousController@showExperiment')->name('show_experiment');
+Route::post('update_title', 'ViewPreviousController@updateTitle')->name('update_title');
+Route::get('delete_experiment/{id}', 'ViewPreviousController@delete')->name('delete_experiment');
 
-Route::get('edit_hardware', 'EditHardwareController@index')->name('edit_hardware');
-Route::get('logout', 'EditHardwareController@logout');
 
 Route::post('start_record', 'AddNewController@startRecord');
-Route::get('stop_record', 'AddNewController@stopRecord');
+Route::post('stop_record', 'AddNewController@stopRecord');
 
 Route::post('get_data', 'AddNewController@getData');
-
 Route::post('add_data', 'AddDataController@add');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+// Auth::routes();
+//
+// Route::get('/home', 'HomeController@index')->name('home');
+//
+// Auth::routes();
+//
+// Route::get('/home', 'HomeController@index')->name('home');

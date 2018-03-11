@@ -44,10 +44,6 @@
         <li class="nav-item">
           <a class="nav-link" href="{{route('view_previous')}}">View Previous</a>
         </li>
-        <!-- <li class="nav-item nav-link">|</li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{route('edit_hardware')}}">Change Hardware Authentication</a>
-        </li> -->
       </ul>
     </div>
   </nav>
@@ -58,6 +54,10 @@
   <script src="{{ asset('js/app.js') }}"></script>
   <script src="{{ asset('js/jquery.toast.min.js') }}"></script>
 
+  <!-- Google Charts -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <!-- Page dependant scripts -->
   @yield('scripts')
 </body>
 </html>

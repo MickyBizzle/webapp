@@ -1,0 +1,59 @@
+#view_previous {
+  width: 100%;
+
+  .pagination {
+    text-align: right;
+  }
+
+  table {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  td,
+  th {
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    font-size: 26px;
+  }
+
+  td {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  #actions {
+    text-align: center;
+
+    a {
+      margin-left: 10px;
+    }
+  }
+
+  tr:hover {
+    background-color: rgba(0,0,0,0.1);
+  }
+
+  .confirm {
+    margin-left: 10px;
+    float: right;
+  }
+
+  .error_msg {
+    color: red;
+    font-weight: bold;
+  }
+}
+
+#show {
+  padding: 5px;
+
+  .data_chart {
+    height: 500px;
+  }
+}

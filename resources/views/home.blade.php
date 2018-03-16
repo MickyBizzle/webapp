@@ -44,6 +44,8 @@
         <div class="action-box">
           <div class="action-content">
             <span class="action-header">Stats</span>
+            <span>Number of experiments: {{ $sizes['experiments'] }}</span>
+            <span>Number of data points: {{ $sizes['data'] }}</span>
           </div>
         </div>
       </div>

@@ -25,8 +25,14 @@ class HomeController extends Controller
   */
   public function index()
   {
-    $recent = DB::table('experiments')->latest()->get()[0];
+    $experiments = DB::table('experiments')->latest()->get();
+    $exp_data = DB::table('experiment_data')->get();
+
+    $recent = $experiments[0];
     $data = DB::table('experiment_data')->where('experiment_id', $recent->id)->get();
-    return view('home')->with(['recent' => $recent, 'data' => $data]);
+
+    $size['experiments'] = count($experiments);
+    $size['data'] = count($exp_data);
+    return view('home')->with(['recent' => $recent, 'data' => $data, 'sizes' => $size]);
   }
 }

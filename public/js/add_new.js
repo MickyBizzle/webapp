@@ -2,8 +2,11 @@ var isRecording = false;
 var firstData = true;
 var expId;
 var oldLength = 0;
+var data_array = [];
 
 $(document).ready(function() {
+  google.charts.load('current', {packages: ['line']});
+  // google.charts.setOnLoadCallback(drawChart);
   //Reset validation when title input is clicked
   $('.title_in').click(function() {
     $('.title_in').removeClass('border border-danger rounded').css('animation', 'none');
@@ -65,7 +68,6 @@ function getData() {
     data: {'getTimeStarted': firstData, 'id': expId},
     success: function(data) {
       data = JSON.parse(data);
-      // console.log(data.data);
       length = data.data.length;
       if (firstData && data.startTime) {
         $('#started div').remove();
@@ -80,6 +82,7 @@ function getData() {
       else {
         $('#status').removeClass("bg-success").addClass("bg-danger").html("NO");
       }
+      drawChart(data.data);
     },
     error: function(error) {
       console.log(error);
@@ -161,4 +164,37 @@ function warningToast(heading, message) {
     bgColor: "#d5d91b",
     loaderBg: "#f3fe7a"
   });
+}
+
+
+function drawChart(exp_data) {
+
+  $.each(exp_data, function(index, value) {
+    var tempArr = [index+1];
+    $.each(JSON.parse(value.data), function(index, value) {
+      tempArr.push(parseFloat(value.value));
+    });
+    data_array.push(tempArr);
+  });
+
+
+  // Define the chart to be drawn.
+  var data = new google.visualization.DataTable();
+  data.addColumn('number', 'Time elapsed (seconds)');
+  data.addColumn('number', 'Beats Per Minute');
+  data.addColumn('number', 'Skin Temperature');
+  data.addColumn('number', 'Galvanic Skin Resistance');
+
+  data.addRows(data_array);
+
+  var options = {
+    chart: {
+      title: 'Results',
+      legend: { position: 'bottom' },
+    }
+  };
+
+  // Instantiate and draw the chart.
+  var chart = new google.charts.Line($('.data_chart')[0]);
+  chart.draw(data, google.charts.Line.convertOptions(options));
 }

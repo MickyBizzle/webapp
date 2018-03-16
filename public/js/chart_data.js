@@ -1,6 +1,10 @@
 var array = [];
 
 $(document).ready(function() {
+  google.charts.load('current', {packages: ['line']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  
   $.each(data, function(index, value) {
     var tempArr = [index+1];
     $.each(JSON.parse(value.data), function(index, value) {
@@ -9,8 +13,6 @@ $(document).ready(function() {
     array.push(tempArr);
   });
 
-  google.charts.load('current', {packages: ['line']});
-  google.charts.setOnLoadCallback(drawChart);
 
   function drawChart() {
     // Define the chart to be drawn.

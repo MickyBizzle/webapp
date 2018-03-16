@@ -15,6 +15,7 @@
     </div>
     <button type="button" class="btn btn-success start_stop">Start</button>
   </div>
+  <div class="data_chart"></div>
 </div>
 @endsection
 

@@ -16,6 +16,8 @@ class CreateExperimentsTable extends Migration
     Schema::create('experiments', function (Blueprint $table) {
       $table->increments('id');
       $table->string('title', 100);
+      $table->boolean('is_training_data');
+      $table->tinyInteger('emotional_response')->nullable();
       $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
       $table->time('elapsed')->nullable();
       $table->dateTime('experiment_started')->nullable();

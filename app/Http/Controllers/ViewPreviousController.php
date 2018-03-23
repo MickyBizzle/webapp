@@ -14,8 +14,14 @@ class ViewPreviousController extends controller
   }
 
   public function index() {
-    $experiments = DB::table('experiments')->paginate(20);
-    return view('previous/home')->with(['experiments' => $experiments, 'url' => URL::full()]);
+    $noData = DB::table('experiments')->where('experiment_started', null)->get();
+    if (sizeof($noData) == 0) {
+      $noData = false;
+    }
+
+    $experiments = DB::table('experiments')->where('experiment_started', '!=', null)->orderBy('created_at', 'desc')->paginate(20);
+
+    return view('previous/home')->with(['noData' => $noData, 'experiments' => $experiments, 'url' => URL::full()]);
   }
 
   public function showExperiment($id) {

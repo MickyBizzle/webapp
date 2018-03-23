@@ -2,11 +2,33 @@
 
 @section('content')
 <div id="view_previous">
+  @if($noData)
+  <table id="noDataTable">
+    <thead>
+      <tr>
+        <th class="text-danger">Experiments with no data. Recommend deletion</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach($noData as $row)
+      <tr>
+        <td id="noData">{{ $row->title }}</td>
+        <td id="noData">
+          <a href="{{ route('delete_experiment', ['id' => $row->id]) }}" onclick="return confirm('Are you sure you want to delete this experiment?')">Delete</a>
+        </td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
+  @endif
   {{ $experiments->links() }}
   <table>
     <thead>
       <tr>
         <th>Title</th>
+        <th>Training Data</th>
+        <th>Emotional Response</th>
         <th>Time Started</th>
         <th>Time Elapsed</th>
         <th id="actions">Actions</th>
@@ -14,8 +36,20 @@
     </thead>
     <tbody>
       @foreach($experiments as $experiment)
-      <tr>
+      <tr id="row{{$experiment->id}}">
         <td onclick="window.location='{{route('show_experiment', ['id' => $experiment->id])}}'"> {{ $experiment->title }} </td>
+        <td><input type="checkbox" <?php if ($experiment->is_training_data) echo "checked";?>></td>
+        <td>
+          <select <?php if (!$experiment->is_training_data) echo "disabled"; ?>>
+            <option value="0" disabled hidden <?php if ($experiment->emotional_response == 0) echo "selected"; ?>>N/A</option>
+            <option value="1" <?php if ($experiment->emotional_response == 1) echo "selected"; ?>>Anger</option>
+            <option value="2" <?php if ($experiment->emotional_response == 2) echo "selected"; ?>>Disgust</option>
+            <option value="3" <?php if ($experiment->emotional_response == 3) echo "selected"; ?>>Fear</option>
+            <option value="4" <?php if ($experiment->emotional_response == 4) echo "selected"; ?>>Happiness</option>
+            <option value="5" <?php if ($experiment->emotional_response == 5) echo "selected"; ?>>Sadness</option>
+            <option value="6" <?php if ($experiment->emotional_response == 6) echo "selected"; ?>>Surprise</option>
+          </select>
+        </td>
         <td onclick="window.location='{{route('show_experiment', ['id' => $experiment->id])}}'"> {{ $experiment->experiment_started }} </td>
         <td onclick="window.location='{{route('show_experiment', ['id' => $experiment->id])}}'"> {{ $experiment->elapsed }} </td>
         <td id="actions">
@@ -49,5 +83,8 @@
 </div>
 @endsection
 @section('scripts')
+<script>
+url = {!! json_encode($url) !!};
+</script>
 <script src="{{ asset('js/change_title.js') }}"></script>
 @endsection

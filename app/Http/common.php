@@ -5,3 +5,7 @@ function returnError($message) {
   header('Content-type: application/json; charset=UTF-8');
   die(json_encode(array('message' => $message, 'code' => 'custom')));
 }
+
+function returnTableNotFoundError() {
+  die(view('table_not_found'));
+}

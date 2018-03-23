@@ -24,7 +24,8 @@ class AddNewController extends controller
       if ($request->input('getTimeStarted')) {
         $toSend['startTime'] = DB::table('experiments')->where('id', $request->input('id'))->get()[0]->experiment_started;
       }
-      $toSend['data'] = DB::table('experiment_data')->select('data')->where('experiment_id', $request->input('id'))->get();
+      $toSend['data'] = DB::table('experiment_data')->select('data')->where('experiment_id', $request->input('id'))->orderBy('id', 'desc')->take(10)->get();
+      $toSend['length'] = sizeof(DB::table('experiment_data')->select('data')->where('experiment_id', $request->input('id'))->get());
       DB::commit();
       return json_encode($toSend);
       // return var_dump($request->input('id'));
@@ -44,7 +45,7 @@ class AddNewController extends controller
     try {
       DB::beginTransaction();
       DB::table('is_recording')->update(['is_recording' => true]);
-      $id = DB::table('experiments')->insertGetId(['title' => $title]);
+      $id = DB::table('experiments')->insertGetId(['title' => $title, 'is_training_data' => $request->input('isTrainingData')]);
       DB::commit();
       return json_encode(['id' => $id]);
     } catch (\Exception $e) {
@@ -63,6 +64,17 @@ class AddNewController extends controller
       }
       DB::commit();
       return DB::table('is_recording')->select()->get();
+    } catch (\Exception $e) {
+      DB::rollback();
+      return $e->getMessage();
+    }
+  }
+
+  public function addEmotion(Request $request) {
+    DB::beginTransaction();
+    try {
+      DB::table('experiments')->where('id', $request->input('id'))->update(['emotional_response' => $request->input('emotion')]);
+      DB::commit();
     } catch (\Exception $e) {
       DB::rollback();
       return $e->getMessage();

@@ -23,6 +23,7 @@ Route::get('delete_experiment/{id}', 'ViewPreviousController@delete')->name('del
 
 Route::post('start_record', 'AddNewController@startRecord');
 Route::post('stop_record', 'AddNewController@stopRecord');
+Route::post('add_emotion', 'AddNewController@addEmotion');
 
 Route::post('get_data', 'AddNewController@getData');
 Route::post('add_data', 'AddDataController@add');

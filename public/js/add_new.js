@@ -17,11 +17,12 @@ $(document).ready(function() {
     // If not recording, check title has been entered and then start recording
     if ($(this).html() == "Start") {
       title = $('.title_in').val().trim();
+      trainingData = +$('.is_training_data').is(":checked");
       if (title == "") {
         $('.title_in').addClass('border border-danger rounded').css('animation', 'shake 0.3s');
       }
       else {
-        startRecord(title);
+        startRecord(title, trainingData);
       }
     }
     // If recording, stop recording
@@ -45,6 +46,35 @@ $(document).ready(function() {
       async:false
     });
   }
+
+  $('.modal .save').click(function() {
+    if ($('input[name=emotion]:checked').val()) {
+      $.ajax({
+        method: "POST",
+        url: "http://svmib26.dcs.aber.ac.uk/webapp/public/add_emotion",
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {'id': expId, 'emotion': $('input[name=emotion]:checked').val()},
+        success: function() {
+          $('#emotionModal').modal('hide');
+        },
+        error: function(e) {
+          console.log(e);
+        }
+      });
+    }
+    else {
+      $('.modal .row .errMsg').remove();
+      $('.modal .row').append('<p class="errMsg text-danger">Please select an option</p>');
+    }
+  });
+
+  $('.modal .close').click(function() {
+    if (confirm('Closing without an option defaults it to N/A and it will not be used for training. This can be changed in the "View Previous" section.')) {
+      $('#emotionModal').modal('hide');
+    }
+  });
 });
 
 var dataInterval;
@@ -68,7 +98,7 @@ function getData() {
     data: {'getTimeStarted': firstData, 'id': expId},
     success: function(data) {
       data = JSON.parse(data);
-      length = data.data.length;
+      length = data.length;
       if (firstData && data.startTime) {
         $('#started div').remove();
         $('#started').append(" " + data.startTime);
@@ -82,7 +112,9 @@ function getData() {
       else {
         $('#status').removeClass("bg-success").addClass("bg-danger").html("NO");
       }
-      drawChart(data.data);
+      if (data.data.length != 0) {
+        drawChart(data.data);
+      }
     },
     error: function(error) {
       console.log(error);
@@ -92,15 +124,16 @@ function getData() {
 
 
 // Send get request to start recording and then show toast message with warming and change css of Start button
-function startRecord(title) {
+function startRecord(title, trainingData) {
   $.ajax({
     method: "POST",
     url:"http://svmib26.dcs.aber.ac.uk/webapp/public/start_record",
-    data: {"title": title},
+    data: {"title": title, "isTrainingData": trainingData},
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function(data) {
+      console.log(data);
       data = JSON.parse(data);
       expId = data.id;
       if (data.id) {
@@ -108,6 +141,7 @@ function startRecord(title) {
         isRecording = true;
         startGetData();
         $('.title_in').prop('disabled', true);
+        $('.is_training_data').prop('disabled', true);
         warningToast("Warning!", "Leaving the page will stop recording");
       }
     },
@@ -131,8 +165,12 @@ function stopRecording() {
     },
     success: function(data) {
       console.log(data);
+      if ($('.is_training_data').is(':checked')) {
+        $('#emotionModal').modal('show');
+      }
       if (data[0].is_recording == 0) {
         $('.start_stop').removeClass('btn-danger').addClass('btn-success').html("Start");
+        $('#status').removeClass("bg-success").addClass("bg-danger").html("NO");
         isRecording = false;
         endGetData();
       }
@@ -168,6 +206,9 @@ function warningToast(heading, message) {
 
 
 function drawChart(exp_data) {
+  data_array = [];
+  exp_data = exp_data.reverse();
+  // console.log(exp_data);
 
   $.each(exp_data, function(index, value) {
     var tempArr = [index+1];
@@ -180,7 +221,7 @@ function drawChart(exp_data) {
 
   // Define the chart to be drawn.
   var data = new google.visualization.DataTable();
-  data.addColumn('number', 'Time elapsed (seconds)');
+  data.addColumn('number', 'Past Ten Seconds');
   data.addColumn('number', 'Beats Per Minute');
   data.addColumn('number', 'Skin Temperature');
   data.addColumn('number', 'Galvanic Skin Resistance');

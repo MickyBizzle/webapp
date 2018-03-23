@@ -20,6 +20,8 @@
       }
 
       #title {
+        display: inline;
+
         input {
           padding: 0 10px;
           font-size: 26px;
@@ -54,5 +56,15 @@
 
   .data_chart {
     flex: 1 1 auto;
+  }
+
+  .row {
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .errMsg {
+    width: 100%;
+    text-align: center;
   }
 }

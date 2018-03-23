@@ -25,8 +25,15 @@ class HomeController extends Controller
   */
   public function index()
   {
-    $experiments = DB::table('experiments')->latest()->get();
-    $exp_data = DB::table('experiment_data')->get();
+    try {
+      $experiments = DB::table('experiments')->latest()->get();
+      $exp_data = DB::table('experiment_data')->get();
+    }
+    catch (\Exception $e) {
+      if (strpos($e->getMessage(), 'table or view not found') !== false) {
+        returnTableNotFoundError();
+      }
+    }
 
     $recent = $experiments[0];
     $data = DB::table('experiment_data')->where('experiment_id', $recent->id)->get();

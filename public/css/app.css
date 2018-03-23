@@ -10087,6 +10087,10 @@ a.text-dark:focus {
   width: 49%;
 }
 
+#add_new_page .head_bar .head_contain #title {
+  display: inline;
+}
+
 #add_new_page .head_bar .head_contain #title input {
   padding: 0 10px;
   font-size: 26px;
@@ -10122,18 +10126,32 @@ a.text-dark:focus {
           flex: 1 1 auto;
 }
 
+#add_new_page .row {
+  font-weight: bold;
+  text-align: center;
+}
+
+#add_new_page .errMsg {
+  width: 100%;
+  text-align: center;
+}
+
 #view_previous {
   width: 100%;
 }
 
-#view_previous .pagination {
-  text-align: right;
+#view_previous ul {
+  float: right;
 }
 
 #view_previous table {
   width: 70%;
   margin-left: auto;
   margin-right: auto;
+}
+
+#view_previous #noDataTable {
+  margin-bottom: 10px;
 }
 
 #view_previous td,
@@ -10150,6 +10168,10 @@ a.text-dark:focus {
   font-weight: bold;
   padding: 5px;
   cursor: pointer;
+}
+
+#view_previous #noData {
+  cursor: default;
 }
 
 #view_previous #actions {

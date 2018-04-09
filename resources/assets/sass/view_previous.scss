@@ -15,9 +15,16 @@
     margin-bottom: 10px;
   }
 
+  .table-head {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
   td,
   th {
     border-bottom: 1px solid #ddd;
+    text-align: center;
   }
 
   th {

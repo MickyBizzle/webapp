@@ -22,7 +22,12 @@
     </tbody>
   </table>
   @endif
-  {{ $experiments->links() }}
+  <div class="table-head">
+    <a class="btn btn-primary text-white" href="{{route('view_previous')}}">View all</a>
+    <a class="btn btn-primary text-white" href="{{route('view_previous', ['show' => 'training'])}}">View training data</a>
+    <a class="btn btn-primary text-white" href="{{route('view_previous', ['show' => 'non_training'])}}">View non-training data</a>
+    {{ $experiments->links() }}
+  </div>
   <table>
     <thead>
       <tr>
@@ -38,9 +43,14 @@
       @foreach($experiments as $experiment)
       <tr id="row{{$experiment->id}}">
         <td onclick="window.location='{{route('show_experiment', ['id' => $experiment->id])}}'"> {{ $experiment->title }} </td>
-        <td><input type="checkbox" <?php if ($experiment->is_training_data) echo "checked";?>></td>
         <td>
-          <select <?php if (!$experiment->is_training_data) echo "disabled"; ?>>
+          {{ Form::open(['route' => ['update_checked', $experiment->id]]) }}
+            <input type="checkbox" <?php if ($experiment->is_training_data) echo "checked";?> name="training_check" onChange="this.form.submit()">
+            {{ csrf_field() }}
+          </form>
+        </td>
+        <td>
+          <select <?php if (!$experiment->is_training_data) echo "disabled"; ?> class="response_select">
             <option value="0" disabled hidden <?php if ($experiment->emotional_response == 0) echo "selected"; ?>>N/A</option>
             <option value="1" <?php if ($experiment->emotional_response == 1) echo "selected"; ?>>Anger</option>
             <option value="2" <?php if ($experiment->emotional_response == 2) echo "selected"; ?>>Disgust</option>
@@ -87,4 +97,5 @@
 url = {!! json_encode($url) !!};
 </script>
 <script src="{{ asset('js/change_title.js') }}"></script>
+<script src="{{ asset('js/view_previous.js') }}"></script>
 @endsection

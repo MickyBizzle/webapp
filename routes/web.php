@@ -19,6 +19,7 @@ Route::get('view_previous', 'ViewPreviousController@index')->name('view_previous
 Route::get('show_experiment/{id}', 'ViewPreviousController@showExperiment')->name('show_experiment');
 Route::post('update_title', 'ViewPreviousController@updateTitle')->name('update_title');
 Route::get('delete_experiment/{id}', 'ViewPreviousController@delete')->name('delete_experiment');
+Route::post('update_checked/{id}', 'ViewPreviousController@updateChecked')->name('update_checked');
 
 
 Route::post('start_record', 'AddNewController@startRecord');

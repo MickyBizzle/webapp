@@ -10154,9 +10154,16 @@ a.text-dark:focus {
   margin-bottom: 10px;
 }
 
+#view_previous .table-head {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 #view_previous td,
 #view_previous th {
   border-bottom: 1px solid #ddd;
+  text-align: center;
 }
 
 #view_previous th {

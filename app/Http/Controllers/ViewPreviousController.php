@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Input;
 
 class ViewPreviousController extends controller
 {
@@ -19,7 +20,23 @@ class ViewPreviousController extends controller
       $noData = false;
     }
 
-    $experiments = DB::table('experiments')->where('experiment_started', '!=', null)->orderBy('created_at', 'desc')->paginate(20);
+    if (!isset($_GET['show'])) {
+      $experiments = DB::table('experiments')->where('experiment_started', '!=', null)->orderBy('created_at', 'desc')->paginate(20);
+    }
+
+    if (isset($_GET['show']) && $_GET['show'] == 'training') {
+      $experiments = DB::table('experiments')->where([
+        ['experiment_started', '!=', null],
+        ['is_training_data', 1]
+        ])->orderBy('created_at', 'desc')->paginate(20);
+    }
+
+    if (isset($_GET['show']) && $_GET['show'] == 'non_training') {
+      $experiments = DB::table('experiments')->where([
+        ['experiment_started', '!=', null],
+        ['is_training_data', 0]
+        ])->orderBy('created_at', 'desc')->paginate(20);
+    }
 
     return view('previous/home')->with(['noData' => $noData, 'experiments' => $experiments, 'url' => URL::full()]);
   }
@@ -48,6 +65,10 @@ class ViewPreviousController extends controller
   public function delete($id) {
     DB::table('experiments')->where('id', $id)->delete();
     return redirect()->back();
+  }
+
+  public function updateChecked($id) {
+    dd($_POST);
   }
 
 }

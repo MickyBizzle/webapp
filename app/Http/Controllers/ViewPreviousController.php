@@ -67,8 +67,22 @@ class ViewPreviousController extends controller
     return redirect()->back();
   }
 
-  public function updateChecked($id) {
-    dd($_POST);
+  public function updateChecked(Request $request) {
+    $id = $request->input('id');
+    $checked = $this->convertBool($request->input('checked'));
+
+    return DB::table('experiments')->where('id', $id)->update(['is_training_data' => $checked]);
+  }
+
+  public function updateOption(Request $request) {
+    $id = $request->input('id');
+    $option = $request->input('option');
+    return DB::table('experiments')->where('id', $id)->update(['emotional_response' => $option]);
+  }
+
+  private function convertBool($input) {
+    if ($input == "true") return 1;
+    if ($input == "false") return 0;
   }
 
 }

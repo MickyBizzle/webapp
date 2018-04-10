@@ -16,10 +16,12 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('add_new', 'AddNewController@show')->name('add_new');
 
 Route::get('view_previous', 'ViewPreviousController@index')->name('view_previous');
+Route::post('view_previous/update_checked', 'ViewPreviousController@updateChecked')->name('update_checked');
+Route::post('view_previous/update_title', 'ViewPreviousController@updateTitle')->name('update_title');
+Route::post('view_previous/update_option', 'ViewPreviousController@updateOption')->name('update_option');
+
 Route::get('show_experiment/{id}', 'ViewPreviousController@showExperiment')->name('show_experiment');
-Route::post('update_title', 'ViewPreviousController@updateTitle')->name('update_title');
 Route::get('delete_experiment/{id}', 'ViewPreviousController@delete')->name('delete_experiment');
-Route::post('update_checked/{id}', 'ViewPreviousController@updateChecked')->name('update_checked');
 
 
 Route::post('start_record', 'AddNewController@startRecord');

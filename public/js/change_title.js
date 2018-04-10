@@ -14,7 +14,7 @@ $(document).ready(function() {
     $('.modal-input-title').removeClass('border border-danger rounded').css('animation', 'none');
     $.ajax({
       method: 'POST',
-      url: "http://svmib26.dcs.aber.ac.uk/webapp/public/update_title",
+      url: url + "/update_title",
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },

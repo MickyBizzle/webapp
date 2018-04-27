@@ -4,7 +4,7 @@ $(document).ready(function() {
   google.charts.load('current', {packages: ['line']});
   google.charts.setOnLoadCallback(drawChart);
 
-  
+
   $.each(data, function(index, value) {
     var tempArr = [index+1];
     $.each(JSON.parse(value.data), function(index, value) {
@@ -35,5 +35,4 @@ $(document).ready(function() {
     var chart = new google.charts.Line($('.data_chart')[0]);
     chart.draw(data, google.charts.Line.convertOptions(options));
   }
-
 });

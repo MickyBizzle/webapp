@@ -14,6 +14,9 @@ $(document).ready(function() {
 
   //Ajax request to start experiment capture
   $('.start_stop').click(function() {
+    if ($(this).hasClass("toExp")) {
+      window.location.href = url.replace('/add_new', '/show_experiment/' + expId);
+    }
     // If not recording, check title has been entered and then start recording
     if ($(this).html() == "Start") {
       title = $('.title_in').val().trim();
@@ -48,14 +51,30 @@ $(document).ready(function() {
   }
 
   $('.modal .save').click(function() {
-    if ($('input[name=emotion]:checked').val()) {
+    if ($(this).hasClass('media') && $('input[name=media]:checked')) {
       $.ajax({
         method: "POST",
-        url: "http://svmib26.dcs.aber.ac.uk/webapp/public/add_emotion",
+        url: "http://svmib26.dcs.aber.ac.uk/webapp/public/add_media",
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        data: {'id': expId, 'emotion': $('input[name=emotion]:checked').val()},
+        data: {'id': expId, 'media': $('input[name=media]:checked').val()},
+        success: function() {
+          $('#mediaModal').modal('hide');
+        },
+        error: function(e) {
+          console.log(e);
+        }
+      });
+    }
+    else if ($('input[name=emotion]:checked').val()) {
+      $.ajax({
+        method: "POST",
+        url: "http://svmib26.dcs.aber.ac.uk/webapp/public/add_emotion_and_media",
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: {'id': expId, 'emotion': $('input[name=emotion]:checked').val(), 'media': $('input[name=media]:checked').val()},
         success: function() {
           $('#emotionModal').modal('hide');
         },
@@ -73,6 +92,7 @@ $(document).ready(function() {
   $('.modal .close').click(function() {
     if (confirm('Closing without an option defaults it to N/A and it will not be used for training. This can be changed in the "View Previous" section.')) {
       $('#emotionModal').modal('hide');
+      $('#mediaModal').modal('hide');
     }
   });
 });
@@ -85,7 +105,7 @@ function startGetData() {
 
 function endGetData() {
   clearInterval(dataInterval);
-  $('.timer').stopwatch('stop');
+  // $('.timer').stopwatch('stop');
 }
 
 function getData() {
@@ -164,12 +184,16 @@ function stopRecording() {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function(data) {
-      console.log(data);
+      // console.log(data);
       if ($('.is_training_data').is(':checked')) {
         $('#emotionModal').modal('show');
       }
+      else {
+        $('#mediaModal').modal('show');
+      }
       if (data[0].is_recording == 0) {
-        $('.start_stop').removeClass('btn-danger').addClass('btn-success').html("Start");
+        $('.start_stop').removeClass('btn-danger').addClass('btn-success toExp').html("View Experiment");
+        $('.new_exp').css('display', 'block');
         $('#status').removeClass("bg-success").addClass("bg-danger").html("NO");
         isRecording = false;
         endGetData();

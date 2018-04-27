@@ -26,6 +26,7 @@
     <a class="btn btn-primary text-white" href="{{route('view_previous')}}">View all</a>
     <a class="btn btn-primary text-white" href="{{route('view_previous', ['show' => 'training'])}}">View training data</a>
     <a class="btn btn-primary text-white" href="{{route('view_previous', ['show' => 'non_training'])}}">View non-training data</a>
+    <a class="btn btn-primary text-white" href="{{route('view_previous', ['show' => 'random'])}}">View random data</a>
     {{ $experiments->links() }}
   </div>
   <table>
@@ -33,6 +34,7 @@
       <tr>
         <th>Title</th>
         <th>Training Data</th>
+        <th>Media Type</th>
         <th>Emotional Response</th>
         <th>Time Started</th>
         <th>Time Elapsed</th>
@@ -45,6 +47,13 @@
         <td onclick="window.location='{{route('show_experiment', ['id' => $experiment->id])}}'"> {{ $experiment->title }} </td>
         <td>
           <input type="checkbox" <?php if ($experiment->is_training_data) echo "checked";?> id="{{$experiment->id}}" class="training_check">
+        </td>
+        <td>
+          <select id="{{$experiment->id}}" class="media_select">
+            <option value="1" <?php if ($experiment->media_type == 1) echo "selected"; ?>>Video</option>
+            <option value="2" <?php if ($experiment->media_type == 2) echo "selected"; ?>>Music</option>
+            <option value="3" <?php if ($experiment->media_type == 3) echo "selected"; ?>>Image</option>
+          </select>
         </td>
         <td>
           <select <?php if (!$experiment->is_training_data) echo "disabled"; ?> id="{{$experiment->id}}" class="response_select">

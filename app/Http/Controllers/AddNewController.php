@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
 class AddNewController extends controller
 {
@@ -14,7 +15,7 @@ class AddNewController extends controller
 
 
   public function show() {
-    return view('add_new');
+    return view('add_new')->with(['url' => URL::full()]);
   }
 
   public function getData(Request $request) {
@@ -70,10 +71,24 @@ class AddNewController extends controller
     }
   }
 
-  public function addEmotion(Request $request) {
+  public function addMedia(Request $request) {
     DB::beginTransaction();
     try {
-      DB::table('experiments')->where('id', $request->input('id'))->update(['emotional_response' => $request->input('emotion')]);
+      DB::table('experiments')->where('id', $request->input('id'))->update(['media_type' => $request->input('media')]);
+      DB::commit();
+    } catch (\Exception $e) {
+      DB::rollback();
+      return $e->getMessage();
+    }
+  }
+
+  public function addEmotionAndMedia(Request $request) {
+    DB::beginTransaction();
+    try {
+      DB::table('experiments')->where('id', $request->input('id'))->update([
+        'media_type' => $request->input('media'),
+        'emotional_response' => $request->input('emotion')
+      ]);
       DB::commit();
     } catch (\Exception $e) {
       DB::rollback();

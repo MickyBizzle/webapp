@@ -31,8 +31,14 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
+    <a disabled class="navbar-brand" style="color:{{$training_colour}}; padding-left:30px;">Training status: {{$training_status}} </a>
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{{route('ml_test')}}">ML</a>
+        </li>
+        <li class="nav-item nav-link">|</li>
         <li class="nav-item">
           <a class="nav-link" href="{{route('home')}}">Home</a>
         </li>

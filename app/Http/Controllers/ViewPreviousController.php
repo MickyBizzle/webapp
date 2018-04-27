@@ -38,13 +38,19 @@ class ViewPreviousController extends controller
         ])->orderBy('created_at', 'desc')->paginate(20);
     }
 
+    if (isset($_GET['show']) && $_GET['show'] == 'random') {
+      $experiments = DB::table('experiments')->where([
+        ['experiment_started', '!=', null],
+        ])->orderBy(DB::raw('RAND()'))->limit(10)->paginate(20);
+    }
+
     return view('previous/home')->with(['noData' => $noData, 'experiments' => $experiments, 'url' => URL::full()]);
   }
 
   public function showExperiment($id) {
     $experiment = DB::table('experiments')->where('id', $id)->get()->first();
     $data = DB::table('experiment_data')->where('experiment_id', $id)->get();
-    return view('previous/show')->with(['experiment' => $experiment, 'data' => $data]);
+    return view('previous/show')->with(['experiment' => $experiment, 'data' => $data, 'id' => $id]);
   }
 
   public function updateTitle(Request $request) {
@@ -78,6 +84,12 @@ class ViewPreviousController extends controller
     $id = $request->input('id');
     $option = $request->input('option');
     return DB::table('experiments')->where('id', $id)->update(['emotional_response' => $option]);
+  }
+
+  public function updateMedia(Request $request) {
+    $id = $request->input('id');
+    $media = $request->input('media');
+    return DB::table('experiments')->where('id', $id)->update(['media_type' => $media]);
   }
 
   private function convertBool($input) {

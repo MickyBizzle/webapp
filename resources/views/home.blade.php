@@ -30,7 +30,7 @@
       <div class="col-sm">
         <div class="action-box">
           <div id="recent">
-            <a href="{{route('add_new')}}">
+            <a href="{{route('show_experiment', ['id' => $recent->id])}}">
               <span id="head">Most Recent</span>
             </a>
             <span>Title: {{ $recent->title }}</span>

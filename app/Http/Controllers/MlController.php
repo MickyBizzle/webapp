@@ -78,7 +78,7 @@ class MlController extends controller
     $modelManager = new ModelManager();
     $restoredClassifier = $modelManager->restoreFromFile($filepath);
 
-    return $restoredClassifier->predict($data);
+    return $this->getResponse($restoredClassifier->predict($data));
   }
 
   public function batch_test() {
@@ -138,17 +138,6 @@ class MlController extends controller
       array_push($temp, floatval($val[1]->value));
       array_push($skinRes, floatval($val[2]->value));
     }
-
-    // $tempVar = "[";
-    //
-    // foreach($heart as $key => $val) {
-    //   $tempVar .= $val;
-    //   $tempVar .= ',';
-    // }
-    //
-    // $tempVar .= ']';
-    // dd($tempVar);
-
     array_push($formattedData, $heart);
     array_push($formattedData, $temp);
     array_push($formattedData, $skinRes);

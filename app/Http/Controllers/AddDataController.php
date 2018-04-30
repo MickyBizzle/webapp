@@ -14,7 +14,7 @@ class AddDataController extends controller
 
   private function timeGreaterThanTen() {
     $time = $this->isRecording()[0]->updated_at;
-    if ((strtotime(date("Y-m-d H:i:s")) - strtotime($time)) > 5) {
+    if ((strtotime(date("Y-m-d H:i:s")) - strtotime($time)) > 10) {
       return false;
     }
     return true;

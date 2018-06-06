@@ -1,0 +1,54 @@
+# webapp
+
+Below is an outline of the file structure. I have only mentioned relevant files that may need changing
+
+File structure:
+- App
+    - Console
+        - Commands
+            - RunTrainingScript.php
+    Http
+        - Controllers
+            - AddDataController.php
+            - AddNewController.php
+            - HomeController.php
+            - MlController.php
+            - ViewPreviousController.php
+        - common.php
+- Database
+    - Migrations
+        - create_users_table.php
+        - create_experiments_table.php
+        - create_experiment_data_table.php
+        - create_is_recording_table.php
+        - create_is_training_table.php
+        - create_training_info.php
+- Public
+    - Js
+        - add_new.js
+        - change_title.js
+        - chart_data.js
+        - ml.js
+        - view_previous.js
+- Resources
+    - Sass
+        - add_new.scss
+        - app.scss
+        - home.scss
+        - ml.scss
+        - view_previous.scss
+    - Views
+        - layouts
+        - previous
+            - home.blade.php
+            - show.blade.php
+        - add_new.blade.php
+        - home.blade.php
+        - ml.blade.php
+- Routes
+    - web.php 
+- Storage
+    - App
+        - labels_data.txt
+        - training_data.txt
+        - model
